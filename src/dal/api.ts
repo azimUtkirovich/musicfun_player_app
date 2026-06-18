@@ -1,13 +1,11 @@
-const apiKey = import.meta.env.VITE_API_KEY || "";
-const headers = { "api-key": apiKey };
+const apiKey = import.meta.env.VITE_API_KEY;
+const headers: HeadersInit = {}
 
-interface TrackResponse {
-  id: string;
-  title: string;
-  [key: string]: unknown;
+if (apiKey) {
+  headers['api-key'] = apiKey;
 }
 
-export const getTrack = (trackId: string): Promise<TrackResponse> => {
+export const getTrack = (trackId: string) => {
   return fetch(
     "https://musicfun.it-incubator.app/api/1.0/playlists/tracks/" + trackId,
     {
@@ -16,7 +14,7 @@ export const getTrack = (trackId: string): Promise<TrackResponse> => {
   ).then((res) => res.json());
 };
 
-export const getTracks = (): Promise<TrackResponse[]> => {
+export const getTracks = () => {
   return fetch(
     "https://musicfun.it-incubator.app/api/1.0/playlists/tracks?pageSize=5",
     {
